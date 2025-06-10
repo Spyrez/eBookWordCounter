@@ -10,6 +10,7 @@ from urllib.request import urlopen
 import re
 from tkinter import *
 import sqlite3
+import webbrowser
 
 
 
@@ -216,7 +217,9 @@ if __name__ == '__main__':
                          f'Enter the url from Project Gutenberg into the url text box to add it to the database.')
             output.insert(END, not_found)
 
-
+    # Used for Project Gutenberg link
+    def click_open_pg_link():
+        webbrowser.open_new("https://www.gutenberg.org/")
 
     # Used for Search Database button
     def click_PG():
@@ -304,35 +307,43 @@ if __name__ == '__main__':
     Label(window, text='Enter the URL below of the book from Project Gutenberg:',
           font='Helvetica 10 bold').grid(row=5, column=0, sticky='w')
 
+    # 5a Project Gutenberg link
+    # Note to future self: The reason you didn't chain .grid() to Label is because you wanted to bind a click event.
+    # Otherwise .grid() returns None instead of the widget and link.bind() won't work.
+    link = Label(window, text='https://www.gutenberg.org/', fg='blue', cursor='hand2')
+    link.grid(row=6, column=0, sticky='w')
+    # Button 1 is the left mouse button
+    link.bind("<Button-1>", lambda e: click_open_pg_link()) # Open Project Gutenberg link when clicked
+
     # 6 Entry box (Project Gutenberg URL)
     PG_text_entry = Entry(window, width=70, bg='lightskyblue1', highlightbackground='black', highlightthickness=1)
-    PG_text_entry.grid(row=6, column=0, sticky='w')
+    PG_text_entry.grid(row=7, column=0, sticky='w')
 
     # 7 Directions label (Project Gutenberg User Display Number)
     Label(window, text='Enter the number of word frequencies to be displayed (Default: 10):',
-          font='Helvetica 10 bold').grid(row=7, column=0, sticky='w')
+          font='Helvetica 10 bold').grid(row=8, column=0, sticky='w')
 
     # 8 Entry box (Project Gutenberg User Display Number)
     PG_user_display_number = Entry(window, width=5, bg='lightskyblue1', highlightbackground='black', highlightthickness=1)
-    PG_user_display_number.grid(row=8, column=0, sticky='w')
+    PG_user_display_number.grid(row=9, column=0, sticky='w')
 
     # 9 Search button(Project Gutenberg)
     (Button(window, text='SEARCH PROJECT GUTENBERG', font='Helvetica 10 bold', bg='dodger blue', width=25, command=click_PG)
-     .grid(row=9, column=0, sticky='w'))
+     .grid(row=10, column=0, sticky='w'))
 
     # 10 Empty label for spacing
-    Label(window, text='', font='Helvetica 10 bold').grid(row=10, column=0, sticky='w')
+    Label(window, text='', font='Helvetica 10 bold').grid(row=11, column=0, sticky='w')
 
     # 11 Results label
     Label(window, text='Results:',
-          font='Helvetica 12 bold').grid(row=11, column=0, sticky='w')
+          font='Helvetica 12 bold').grid(row=12, column=0, sticky='w')
 
     # 12 Output box
     output = Text(window, width=40, height=12, wrap=WORD, bg='light grey')
-    output.grid(row=12, column=0, sticky='w')
+    output.grid(row=13, column=0, sticky='w')
 
     # 13 Exit Button
     (Button(window, text='EXIT', font='Helvetica 10 bold', bg='red', command=close_window)
-     .grid(row=13, column=0, sticky='w'))
+     .grid(row=14, column=0, sticky='w'))
 
     window.mainloop()
